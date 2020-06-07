@@ -11,7 +11,7 @@ Local Test 3 Microservices and Solutions on docker
 docker-compouse up -d
 ```
 
-## Stop Solutions : postgres, kafka, redis
+## Stop Solutions 
 
 이전데이터를 모두 삭제하고 종료
 ```
