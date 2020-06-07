@@ -10,6 +10,8 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - academy-net
 
   broker:
     image: nexweb1/cp-enterprise-kafka:klab-0.1
@@ -33,6 +35,8 @@ services:
       CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
+    networks:
+      - academy-net
 
   redis-master:
     container_name: "redis-master"
@@ -43,6 +47,8 @@ services:
     volumes:
       - "./data/master:/data/"
       - "./master.conf:/etc/redis.conf"
+    networks:
+      - academy-net
 
   redis-slave:
     image: redis
@@ -53,6 +59,8 @@ services:
     volumes:
       - "./data/slave:/data/"
       - "./slave.conf:/etc/redis.conf"
+    networks:
+      - academy-net
 
   postgres:
     image: postgres:10
@@ -64,3 +72,60 @@ services:
       - "./init.sql:/docker-entrypoint-initdb.d/1-ddl.sql"
     environment:
       - POSTGRES_PASSWORD=passw0rd
+    networks:
+      - academy-net
+
+  order:
+    image: nexweb1/order
+    hostname: order
+    container_name: "order"
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/postgres'
+      PRODUCT_URL: 'http://stock:8081/products'
+      STOCK_URL: 'http://stock:8081/stocks'
+      PAYMENT_URL: 'http://payment:8082/payments'
+    depends_on:
+      - postgres
+    networks:
+      - academy-net
+
+  stock:
+    image: nexweb1/stock
+    hostname: stock
+    container_name: "stock"
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_KAFKA_BOOTSTRAPSERVERS: 'broker:29092'
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/postgres'
+      SPRING_REDIS_HOST: 'redis-master'
+    depends_on:
+      - broker
+      - redis-master
+      - postgres
+    networks:
+      - academy-net
+    links:
+      - broker
+
+  payment:
+    image: nexweb1/payment
+    hostname: payment
+    container_name: "payment"
+    ports:
+      - "8082:8082"
+    depends_on:
+      - broker
+      - postgres
+    environment:
+      SPRING_KAFKA_BOOTSTRAPSERVERS: 'broker:29092'
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/postgres'
+    networks:
+      - academy-net
+    links:
+      - broker
+
+networks:
+  academy-net:
