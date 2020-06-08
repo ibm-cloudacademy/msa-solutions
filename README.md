@@ -1,5 +1,10 @@
 # msa-solutions
-Local Test 3 Microservices and Solutions on docker
+Local 3 Microservices and Solutions on docker
+3개의 Microservice 와 postgres, kafka, redis를 docker images로제공하며 구성은 아래와 같습니다.
+전체 7개의 앱이 실행되어 업무 PC Spec에 따라 느릴 수 있습니다.
+3개의 앱이 시작되었는지 로그를 통해 확인하세요.
+
+![alt text](img/rest_tcc_docker.png)
 
 ## Start Solutions : 
 * postgres 
