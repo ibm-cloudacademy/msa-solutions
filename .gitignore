@@ -1,3 +1,8 @@
+
+# Keep empty folder
+!data/master/.gitkeep
+!data/slave/.gitkeep
+
 # Compiled class file
 *.class
 

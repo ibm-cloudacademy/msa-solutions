@@ -14,7 +14,11 @@ Local 3 Microservices and Solutions on docker
 
 ```
 docker-compouse up -d
+
 ```
+수행결과
+
+![alt text](img/docker_run.png)
 
 ## Stop Solutions 
 
