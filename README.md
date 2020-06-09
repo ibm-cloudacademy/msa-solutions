@@ -6,16 +6,17 @@ Local 3 Microservices and Solutions on docker
 
 ![alt text](img/rest_tcc_docker.png)
 
-## Start Solutions : 
+## Start Solutions  
 * postgres 
 * kafka 
-* redis 
-* microservices
+* zookeeper
+* redis master/slave
+* 3 microservices
 
 ```
 docker-compouse up -d
 ```
-microservice and solutions 실행 확인
+3 microservices and solutions 실행 확인
 ```
 docker ps --format="table {{.Names}}\t {{.Ports}}\t {{.Image}}\t {{.ID}}"
 ```
