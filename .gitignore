@@ -3,6 +3,8 @@
 !data/master/.gitkeep
 !data/slave/.gitkeep
 
+*.aof
+
 # Compiled class file
 *.class
 
