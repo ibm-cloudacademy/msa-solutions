@@ -1,7 +1,7 @@
 
 # Keep empty folder
-!data/master/.gitkeep
-!data/slave/.gitkeep
+!data\master\.gitkeep
+!data\slave\.gitkeep
 
 *.aof
 
