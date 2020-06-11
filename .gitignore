@@ -3,7 +3,9 @@
 !data\master\.gitkeep
 !data\slave\.gitkeep
 
+
 *.aof
+*.rdb
 
 # Compiled class file
 *.class
